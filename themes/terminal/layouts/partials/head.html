@@ -89,5 +89,10 @@
   <link href="{{ .RelPermalink }}" rel="alternate" type="application/json" title="{{ $.Site.Title }}" />
 {{ end }}
 
+<!-- Katex -->
+{{ if or .Params.math .Site.Params.math }}
+  {{ partial "math.html" . }}
+{{ end }}
+
 <!-- Extended head section-->
 {{ partial "extended_head.html" . }}
