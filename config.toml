@@ -1,6 +1,0 @@
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'Lucas Van Mol'
-theme = 'terminal'
-
-# https://themes.gohugo.io/themes/hugo-theme-terminal/

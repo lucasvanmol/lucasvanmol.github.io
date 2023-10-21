@@ -7,7 +7,6 @@ cover = ""
 tags = ["godot", "shaders"]
 keywords = ["", ""]
 description = ""
-showFullContent = false
 readingTime = false
 hideComments = false
 math = true
@@ -20,11 +19,11 @@ color = "" #color from the theme settings
 
 In a small game called [Hook Head](https://6e23.itch.io/hook-head) I made for a game jam, the main character has a spring-like appendage which reacts organically to the character's movement. This post will talk about this effect and also how to create the same effect in 3D. A demo of the contents of this post is available [on GitHub](https://github.com/lucasvanmol/godot-oscillator-shader).
 
-![Hook Head](/hookhead.gif)
+![Hook Head](hookhead.gif)
 
 ---
 
-# Bending in 2D
+## Bending in 2D
 
 In linear algebra, 2D space can be rotated using a rotation matrix like this one:
 
@@ -38,14 +37,14 @@ $$
 
 where θ is the angle of rotation. Such a matrix can be used in a shader by multiplying it by the UV's in order to rotate the texture by an angle θ. For a bending effect, we can let the angle of rotation at each pixel be proportional to the euclidean distance between the pixel and some center point. This means that the further away a pixel is from the center point, the more the pixel gets rotated and curved away from its original position - also known as a twirl. We can multiply the distance by some strength value to control how much twirl we want.
 
-![Twirl Shader](/twirl_shader.gif)
+![Twirl Shader](twirl_shader.gif)
 
 
 However, there are two problems. The first are the graphical glitches which occur at the edges of the sprite, and the other problem is that the bottom of the sprite does not remain level.
 
 The graphical glitches can be fixed by adding some invisible padding around the sprite. For the bottom of the sprite to remain level, the twirl shader needs to be modified so that the angle of rotation is proportional to only the difference in y-coordinates between the pixel and the center point instead of the euclidean length. This will cause the horizontal line that crosses through the center point to remain level:
 
-![Modified Twirl Shader](/modified_twirl.gif)
+![Modified Twirl Shader](modified_twirl.gif)
 
 This gets us the effect that we want. Note that if we wanted to bend our sprite past its own boundaries, the sprite would get cut off. This can again be fixed by adding more padding. Here is the final shader code, where we use the rotation matrix mentioned above and have the angle be proportional to the height difference of the pixel and the center point.
 
@@ -67,7 +66,7 @@ void fragment() {
 }
 ```
 
-# Making it spring
+## Making it spring
 
 Now that we have a way to convincingly bend the sprite in 2D, we need some movement code in order to create organic looking motion. In physics, systems like the one we are trying to create are known as damped oscillators. They're very useful for describing things that vibrate, such as pendulums, springs or guitar strings. Their motion can be described by a simple equation:
 
@@ -98,15 +97,15 @@ func _process(delta):
 
 Now when we press the required action, the velocity of the oscillator makes it go flying toward the right before oscillating back to its equilibrium position.
 
-![Shader with oscillator script](/oscillating_tower.gif)
+![Shader with oscillator script](oscillating_tower.gif)
 
 ---
 
-# The Damping Ratio (aside)
+## The Damping Ratio (aside)
 
 Playing around with the values of spring and damping constants will result in different effects. The spring constant controls the force that pulls the oscillator back towards the equilibrium position - essentially how 'springy' it is.
 
-![Varying the spring constant](/spring_constant.gif)
+![Varying the spring constant](spring_constant.gif)
 *Varying the spring constant from high to low - notice how they all come to a stop at the same time*
 
 The dampening constant acts like friction, gradually slowing down the amplitude of the oscillations. An interesting ratio to note here is the damping ratio ζ , which is calculated in the following way:
@@ -129,16 +128,16 @@ The damping ratio ζ determines the behavior of the oscillator:
   
 * ζ = 0: the system is undamped, and oscillates at a constant amplitude.
 
-![Varying the damping constant](/damping_constant.gif)
+![Varying the damping constant](damping_constant.gif)
 *Varying the damping constant: overdamped, critically damped, underdamped and undamped*
 
 Once you have settled on how you want the oscillations to look like, you can integrate them into your game. In [Hook Head](https://6e23.itch.io/hook-head), the velocity value of the oscillator is tied to the velocity of the character, meaning it will bend when the character is in movement, and spring back to equilibrium when the character stops. There's also some velocity added when you attack, in order to provide another dimension of feedback for a player's actions.
 
-![Hook Head](/hookhead.gif)
+![Hook Head](hookhead.gif)
 
 ---
 
-# Making it work in 3D
+## Making it work in 3D
 There is not much more work to be done to get this effect working in 3D. We just need a way to rotate 3D space, which can be done by using three 3x3 matrices:
 
 $$
@@ -216,17 +215,17 @@ The normals are easily recalculated by appling the same rotation without the off
 
 Here we can see how each matrix affects the mesh:
 
-![Bendy Eiffel Tower](/eiffel_tower_bend.gif)
+![Bendy Eiffel Tower](eiffel_tower_bend.gif)
 
 In order to get a satisfying springy effect, we'll use the X and Z rotations to deform the mesh. We can rewrite the oscillator script to use a Vector2 for the velocity and the displacement, as we're rotating in two dimensions, and update the shader accordingly.
 
 To make it interactive, I've added some collision detection to detect when the mesh is pressed, and the displacement value is updated by a value proportional to the vector pointing from the mouse press position to the current mouse position. When the mouse press is released, the oscillator script goes to work.
 
-![interactive eiffel tower](/eiffel_tower.gif)
+![interactive eiffel tower](eiffel_tower.gif)
 
 ---
 
-# Optimizations and Other Approaches
+## Optimizations and Other Approaches
 
 This post has been much longer than I anticipated, but I'll quickly go over some optimizations that can be made. The first is precalculating the rotation matrices, as this can be done ahead of time by the CPU, and will save costly GPU trig calls. 
 
