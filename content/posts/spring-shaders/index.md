@@ -19,6 +19,8 @@ In a small game called [Hook Head](https://6e23.itch.io/hook-head) I made for a 
 
 ![Hook Head](hookhead.gif)
 
+{{< github repo="lucasvanmol/godot-oscillator-shader" >}}
+
 > This post uses Godot, but it should be straightforward enough to transcribe it to other engines. It also assumes some basic knowledge of shaders and linear algebra.
 
 ---
@@ -105,8 +107,7 @@ Now when we press the required action, the velocity of the oscillator makes it g
 
 Playing around with the values of spring and damping constants will result in different effects. The spring constant controls the force that pulls the oscillator back towards the equilibrium position - essentially how 'springy' it is.
 
-![Varying the spring constant](spring_constant.gif)
-*Varying the spring constant from high to low - notice how they all come to a stop at the same time*
+![Varying the spring constant](spring_constant.gif "Varying the spring constant from high to low - notice how they all come to a stop at the same time")
 
 The dampening constant acts like friction, gradually slowing down the amplitude of the oscillations. An interesting ratio to note here is the damping ratio ζ , which is calculated in the following way:
 
@@ -128,8 +129,7 @@ The damping ratio ζ determines the behavior of the oscillator:
   
 * ζ = 0: the system is undamped, and oscillates at a constant amplitude.
 
-![Varying the damping constant](damping_constant.gif)
-*Varying the damping constant: overdamped, critically damped, underdamped and undamped*
+![Varying the damping constant](damping_constant.gif "Varying the damping constant: overdamped, critically damped, underdamped and undamped")
 
 Once you have settled on how you want the oscillations to look like, you can integrate them into your game. In [Hook Head](https://6e23.itch.io/hook-head), the velocity value of the oscillator is tied to the velocity of the character, meaning it will bend when the character is in movement, and spring back to equilibrium when the character stops. There's also some velocity added when you attack, in order to provide another dimension of feedback for a player's actions.
 
@@ -215,7 +215,7 @@ The normals are easily recalculated by appling the same rotation without the off
 
 Here we can see how each matrix affects the mesh:
 
-![Bendy Eiffel Tower](eiffel_tower_bend.gif)
+![Bendy Eiffel Tower](eiffel_tower_bend.gif "*3D Eiffel Tower model by [cbmbeach](https://www.cgtrader.com/free-3d-models/architectural/engineering/eiffel-tower-056df590-f97e-4f93-8e11-3f2bd25951da)  -  licensed under CC BY-SA 3.0*")
 
 In order to get a satisfying springy effect, we'll use the X and Z rotations to deform the mesh. We can rewrite the oscillator script to use a Vector2 for the velocity and the displacement, as we're rotating in two dimensions, and update the shader accordingly.
 
@@ -232,7 +232,3 @@ This post has been much longer than I anticipated, but I'll quickly go over some
 But while transformations using matrices may be conceptually easier to understand, rotations can also be done with quaternions, which are more efficient if all you want to do is rotate. How quaternions work is quite out of scope of this post, but [here's an example](https://gist.github.com/lucasvanmol/ccf79ef37c125d61abc288dbd216dfe2) of how you could implement them.
 
 For another approach to boingy buildings, check out [this great post](https://www.glasstomegames.co.uk/blog/20-08-28-springy-buildings/) by GlassTome Games, which uses Bezier curves for rotation.
-
----
-
-*3D Eiffel Tower model by [cbmbeach](https://www.cgtrader.com/free-3d-models/architectural/engineering/eiffel-tower-056df590-f97e-4f93-8e11-3f2bd25951da)  -  licensed under CC BY-SA 3.0*
