@@ -12,14 +12,14 @@ hideComments = false
 math = true
 color = "" #color from the theme settings
 +++
-
-
-> This post uses Godot, but it should be straightforward enough to transcribe it to other engines. It also assumes some basic knowledge of shaders and linear algebra.
+{{< katex >}}
 
 
 In a small game called [Hook Head](https://6e23.itch.io/hook-head) I made for a game jam, the main character has a spring-like appendage which reacts organically to the character's movement. This post will talk about this effect and also how to create the same effect in 3D. A demo of the contents of this post is available [on GitHub](https://github.com/lucasvanmol/godot-oscillator-shader).
 
 ![Hook Head](hookhead.gif)
+
+> This post uses Godot, but it should be straightforward enough to transcribe it to other engines. It also assumes some basic knowledge of shaders and linear algebra.
 
 ---
 
