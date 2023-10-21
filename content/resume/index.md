@@ -2,13 +2,12 @@
 title: "Resume"
 date: 2023-10-21T14:11:52+02:00
 draft: false
-math: false
-showAuthor: false
+showAuthor: true
 showReadingTime: false
 showWordCount: false
 showDate: false
 showTaxonomies: false
-layout: "simple"
+layout: "single"
 ---
 ## Experience
 

@@ -16,12 +16,12 @@ title = "Lucas Van Mol"
 [author]
   name = "Lucas Van Mol"
   image = "img/me.jpg"
-  headline = "MSc Computer Science Student at TUDelft"
-  # bio = "A little bit about you" # appears in author card for each article
+  headline = "MSc Computer Science Student @ TUDelft"
+  bio = "MSc CS @ TUDelft" # appears in author card for each article
   links = [
+    { email = "mailto:me@lucasvanmol.com" },
     { github = "https://github.com/lucasvanmol" },
     { linkedin = "https://linkedin.com/in/lucasvanmol" },
-    { email = "mailto:me@lucasvanmol.com" },
     # { link = "https://link-to-some-website.com/" },
     # { amazon = "https://www.amazon.com/hz/wishlist/ls/wishlist-id" },
     # { apple = "https://www.apple.com" },
