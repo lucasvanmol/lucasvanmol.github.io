@@ -35,10 +35,11 @@
 
                         <div
                             class="font-bold text-xl text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral">
+                            {{ if .Params.icon }}
                             <span class="relative inline-block align-text-top">
                                 {{ partial "icon.html" .Params.icon }}
                             </span>
-                            &nbsp;
+                            {{ end }}
                             {{ .Title | emojify }}
 
                             <!-- <span class="text-xs align-top cursor-default text-neutral-400 dark:text-neutral-500">
