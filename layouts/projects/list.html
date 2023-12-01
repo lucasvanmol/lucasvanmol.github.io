@@ -4,30 +4,31 @@
     {{ range .Pages }}
     <div
         class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative backdrop-blur">
+        <a class="flex" href="{{ .Params.externalUrl }}">
 
-        {{- $images := .Resources.ByType "image" -}}
-        {{- $featured := $images.GetMatch "*feature*" -}}
-        {{- if not $featured }}{{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
-        {{- if not $featured }}{{ with .Site.Params.defaultFeaturedImage }}{{ $featured = resources.Get . }}{{ end }}{{
-        end -}}
-        {{ if .Params.hideFeatureImage }}{{ $featured = false }}{{ end }}
-        {{- with $featured -}}
-        {{ if $disableImageOptimization }}
-        {{ with . }}
-        <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
-        {{ end }}
-        {{ else }}
-        {{ with .Resize "600x" }}
-        <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
-        {{ end }}
-        {{ end }}
-        {{- else -}}
-        {{- with $.Site.Params.images }}
-        <meta property="og:image" content="{{ index . 0 | absURL }}" />{{ end -}}
-        {{- end -}}
+            {{- $images := .Resources.ByType "image" -}}
+            {{- $featured := $images.GetMatch "*feature*" -}}
+            {{- if not $featured }}{{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
+            {{- if not $featured }}{{ with .Site.Params.defaultFeaturedImage }}{{ $featured = resources.Get . }}{{ end
+            }}{{
+            end -}}
+            {{ if .Params.hideFeatureImage }}{{ $featured = false }}{{ end }}
+            {{- with $featured -}}
+            {{ if $disableImageOptimization }}
+            {{ with . }}
+            <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
+            {{ end }}
+            {{ else }}
+            {{ with .Resize "600x" }}
+            <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
+            {{ end }}
+            {{ end }}
+            {{- else -}}
+            {{- with $.Site.Params.images }}
+            <meta property="og:image" content="{{ index . 0 | absURL }}" />{{ end -}}
+            {{- end -}}
 
-        <article class="pb-6">
-            <a class="flex" href="{{ .Params.externalUrl }}">
+            <article class="pb-6">
 
                 <div class="px-6 py-4">
                     <div class="mr-3 text-3xl text-neutral-300">
@@ -37,6 +38,7 @@
                             <span class="relative inline-block align-text-top">
                                 {{ partial "icon.html" .Params.icon }}
                             </span>
+                            &nbsp;
                             {{ .Title | emojify }}
 
                             <!-- <span class="text-xs align-top cursor-default text-neutral-400 dark:text-neutral-500">
@@ -52,7 +54,7 @@
                         {{ .Description }}
                     </p>
                 </div>
-            </a>
+        </a>
         </article>
     </div>
     {{ end }}
