@@ -1,0 +1,60 @@
+{{ define "main" }}
+<section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+    {{ $disableImageOptimization := .Page.Site.Params.disableImageOptimization | default false }}
+    {{ range .Pages }}
+    <div
+        class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative backdrop-blur">
+
+        {{- $images := .Resources.ByType "image" -}}
+        {{- $featured := $images.GetMatch "*feature*" -}}
+        {{- if not $featured }}{{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
+        {{- if not $featured }}{{ with .Site.Params.defaultFeaturedImage }}{{ $featured = resources.Get . }}{{ end }}{{
+        end -}}
+        {{ if .Params.hideFeatureImage }}{{ $featured = false }}{{ end }}
+        {{- with $featured -}}
+        {{ if $disableImageOptimization }}
+        {{ with . }}
+        <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
+        {{ end }}
+        {{ else }}
+        {{ with .Resize "600x" }}
+        <div class="w-full thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }});"></div>
+        {{ end }}
+        {{ end }}
+        {{- else -}}
+        {{- with $.Site.Params.images }}
+        <meta property="og:image" content="{{ index . 0 | absURL }}" />{{ end -}}
+        {{- end -}}
+
+        <article class="pb-6">
+            <a class="flex" href="{{ .Params.externalUrl }}">
+
+                <div class="px-6 py-4">
+                    <div class="mr-3 text-3xl text-neutral-300">
+
+                        <div
+                            class="font-bold text-xl text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral">
+                            <span class="relative inline-block align-text-top">
+                                {{ partial "icon.html" .Params.icon }}
+                            </span>
+                            {{ .Title | emojify }}
+
+                            <!-- <span class="text-xs align-top cursor-default text-neutral-400 dark:text-neutral-500">
+                                <span class="rtl:hidden">&#8599;</span>
+                                <span class="ltr:hidden">&#8598;</span>
+                            </span> -->
+
+                        </div>
+
+                    </div>
+
+                    <p class="text-sm text-neutral-500">
+                        {{ .Description }}
+                    </p>
+                </div>
+            </a>
+        </article>
+    </div>
+    {{ end }}
+</section>
+{{ end }}
