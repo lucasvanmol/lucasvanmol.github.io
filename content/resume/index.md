@@ -22,6 +22,13 @@ layout: "single"
         </tr>
     </thead>
     <tbody>
+    <tr>
+            <td><img class="customEntitityLogo" src="optiver_logo.svg"/></td>
+            <td><b>Optiver</b></td>
+            <td>Graduate Software Engineer</td>
+            <td>Jul 2025 - Present</td>
+            <td>Amsterdam, NL</td>
+        </tr>
         <tr>
             <td><img class="customEntitityLogo" src="w3f_logo.png"/></td>
             <td><b>Web3 Foundation</b></td>
@@ -62,7 +69,7 @@ layout: "single"
         <tr>
             <td><img class="customEntitityLogo" src="tudelft_logo.jpg"/></td>
             <td><b>TU Delft</b></td>
-            <td>MSc Computer Science</td>
+            <td>MSc Computer Science<br><i>Graduated Cum Laude</id></td>
             <td>2023 - 2025</td>
             <td>Delft, NL</td>
         </tr>
